@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "student-stories.js",
+  "sourceRoot": "",
+  "sources": [
+    "student-stories.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;;AAAA"
+}
