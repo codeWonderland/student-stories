@@ -1,10 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<style>
+    div#content {
+        width: 100%;
+        margin-top: 0;
+    }
 
-</body>
-</html>
+    #side-nav {
+        display: none;
+    }
+
+    #column-container-2 {
+        width: 94%;
+    }
+
+    #content-wrapper {
+        width:70%!important;
+    }
+
+    div#column-container-2 #sidebar {
+        width: 19%!important;
+    }
+
+    .callout.sidebar-item.video-display {
+        display: none;
+    }
+
+    #breadcrumbs {
+        display: none;
+    }
+
+    .feat-objects {
+        display: none
+    }
+
+    .preview-item {
+        height: auto;
+        width: 30%;
+        display: inline-block;
+        padding: 0;
+        margin: 1%;
+    }
+
+    .btn {
+        float: right;
+        margin-right: 5%;
+        margin-bottom: 2%!important;
+    }
+</style>
+<h1>Meet our Students</h1>
+<p>Let our students share why they think Champlain is a college unlike any other.</p>
+<div class="video-feature">
+    <div class="video" id="feature-video"></div>
+    <div class="feat-objects">
+        <p class="video-url">https://player.vimeo.com/video/215696837?color=ffffff&title=0&byline=0&portrait=0</p>
+        <p class="thumbnail-url">https://i.vimeocdn.com/video/632720993_640x360.jpg?r=pad</p>
+    </div>
+    <div class="feat-objects">
+        <p class="video-url">https://player.vimeo.com/video/212141211?color=ffffff&title=0&byline=0&portrait=0</p>
+        <p class="thumbnail-url">https://i.vimeocdn.com/video/628816249_640x360.jpg?r=pad</p>
+    </div>
+    <div class="feat-objects">
+        <p class="video-url">https://player.vimeo.com/video/209804856?color=ffffff&title=0&byline=0&portrait=0</p>
+        <p class="thumbnail-url">https://i.vimeocdn.com/video/625568631_640x360.jpg?r=pad</p>
+    </div>
+    <div class="feat-objects">
+        <p class="video-url">https://player.vimeo.com/video/209804876?color=ffffff&title=0&byline=0&portrait=0</p>
+        <p class="thumbnail-url">https://i.vimeocdn.com/video/629073900_640x360.jpg?r=pad</p>
+    </div>
+    <br />
+    <div id="preview-container"></div>
+</div>
+<br />
+<a class="btn" href="x36256.xml">Meet More Champlain Students</a>
+<br />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    (function() {
+        $(document).ready(function() {
+            return setActiveFeature(0);
+        });
+
+        this.setActiveFeature = function(n) {
+            var feat, feats, html, i, j, k, len, ref, url;
+            feats = document.getElementsByClassName("feat-objects");
+            url = feats[n].getElementsByClassName('video-url')[0].innerHTML;
+            document.getElementById("feature-video").innerHTML = '<p><iframe frameborder="0" height="562.5" src="' + url + '" width="1000"></iframe></p>';
+            for (j = 0, len = feats.length; j < len; j++) {
+                feat = feats[j];
+                feat.className = feat.className.replace(" active", "");
+            }
+            feats[n].className += " active";
+            html = "";
+            for (i = k = 0, ref = feats.length; 0 <= ref ? k < ref : k > ref; i = 0 <= ref ? ++k : --k) {
+                if (!feats[i].classList.contains("active")) {
+                    html += '<img src="' + feats[i].getElementsByClassName("thumbnail-url")[0].innerHTML + '" class="preview-item champ-card" onclick="setActiveFeature(' + i + ')" />';
+                }
+            }
+            document.getElementById("preview-container").innerHTML = html;
+        };
+
+    }).call(this);
+</script>
