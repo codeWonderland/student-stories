@@ -1,5 +1,23 @@
-#landing-image img {
-  height: 70%;
-  width: auto;
-  margin-top: 30%;
+#side-nav {
+  display: none;
+}
+
+#content {
+  width: 100%;
+}
+
+div#inner-container {
+  margin-left: 0;
+}
+
+div#column-container-2 {
+  width: 78%;
+}
+
+#inner-container.landing #column-container-2 #content-wrapper {
+  width: 70%;
+}
+
+.ss-data {
+  display: none;
 }
