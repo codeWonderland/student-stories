@@ -1,0 +1,71 @@
+div#content {
+    width: 100%;
+    margin-top: 0;
+}
+
+#side-nav {
+    display: none;
+}
+
+#column-container-2 {
+    width: 94%;
+}
+
+#content-wrapper {
+    width:68%!important;
+}
+
+div#column-container-2 #sidebar {
+    width: 21%!important;
+}
+
+.callout.sidebar-item.video-display {
+    display: none;
+}
+
+#breadcrumbs {
+    display: none;
+}
+
+.feat-objects {
+    display: none
+}
+
+.preview-item {
+    height: auto;
+    width: 31%;
+    display: inline-block;
+    padding: 0;
+    margin: 1%;
+}
+
+.right-btn {
+    float: right;
+    margin-right: 5%;
+    margin-bottom: 2%!important;
+}
+
+.ss-video-container {
+    width: 100%;
+    height: auto;
+}
+
+.ss-title {
+    font-family: 'Lato';
+    margin-bottom: 0;
+}
+
+h2.ss-subtitle {
+    font-family: 'Lato';
+    font-weight: normal;
+    font-size: 1.3em;
+    margin-top: 5px;
+    line-height: 1.3em;
+}
+
+.dots {
+    height: 10px;
+    width: 100%;
+    background-image: url('images/ace/student-stories-dev/dots-01.png');
+    background-repeat: repeat-x;
+}

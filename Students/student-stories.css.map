@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,SAAU;EACR,OAAO,EAAE,IAAI;;AAGf,QAAS;EACP,KAAK,EAAE,IAAI;;AAGb,mBAAoB;EAClB,WAAW,EAAE,CAAC;;AAGhB,sBAAuB;EACrB,KAAK,EAAE,GAAG;;AAGZ,6DAA8D;EAC5D,KAAK,EAAE,GAAG;;AAGZ,QAAS;EACP,OAAO,EAAE,IAAI",
-"sources": ["student-stories.scss"],
-"names": [],
-"file": "student-stories.css"
-}

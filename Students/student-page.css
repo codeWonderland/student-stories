@@ -1,0 +1,67 @@
+.video-wrapper-wrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: visible; }
+
+#video-left {
+  left: 0; }
+
+#video-right {
+  right: 0; }
+
+.video-wrapper {
+  top: 0;
+  margin: 0;
+  padding: 2%;
+  position: absolute;
+  width: 51%;
+  height: auto; }
+
+.video-thumb {
+  width: 100%; }
+
+.student-profile {
+  display: none; }
+
+.dots {
+  height: 10px;
+  width: 100%;
+  background-image: url("images/ace/student-stories-dev/dots-01.png");
+  background-repeat: repeat-x; }
+
+div#content {
+  width: 100%; }
+
+#side-nav {
+  display: none; }
+
+#column-container-2 {
+  width: 94%; }
+
+#content-wrapper {
+  width: 54% !important; }
+
+div#breadcrumbs {
+  width: 75%; }
+
+#landing-image .caption {
+  bottom: 60px !important;
+  right: 250px !important; }
+
+.ss-title {
+  font-family: 'Lato';
+  margin-bottom: 0; }
+
+h2.ss-subtitle {
+  font-family: 'Lato';
+  font-weight: normal;
+  font-size: 1em;
+  margin-top: 0;
+  line-height: 1.3em; }
+
+@media only screen and (max-width: 768px) {
+  .video-thumb {
+    margin: 10px !important; } }
+
+/*# sourceMappingURL=student-page.css.map */

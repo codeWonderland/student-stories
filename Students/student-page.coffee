@@ -1,3 +1,4 @@
+mq = window.matchMedia( "(max-width: 768px)" )
 $(document).ready ->
   container = document.getElementsByClassName('student-container')[0]
   dataSource = document.getElementsByClassName('student-profile')[0]
@@ -8,25 +9,33 @@ $(document).ready ->
   if dataSource.getElementsByClassName('ss-video-thumb').length is 1
     tempHTML += '<div onclick="playVid()" class="ss-video-container"><img class="ss-vid-thumb" alt="student video thumb" src="' +
       dataSource.getElementsByClassName('ss-video-thumb')[0].innerHTML + '" /></div><div class="dots"></div>'
-  else if dataSource.getElementsByClassName('ss-video-thumb').length is 2
+  else if dataSource.getElementsByClassName('ss-video-thumb').length is 2 and not mq.matches
     tempHTML += '<div class="video-wrapper-wrapper"><div class="video-wrapper" onclick="selectVid(this)" id="video-left">' +
       '<img class="video-thumb" alt="student video thumb" src="' +
       dataSource.getElementsByClassName('ss-video-thumb')[0].innerHTML + '" /></div><div class="video-wrapper" onclick="selectVid(this)" id="video-right">' +
       '<img class="video-thumb" alt="student video thumb" src="' +
       dataSource.getElementsByClassName('ss-video-thumb')[1].innerHTML + '" /></div></div><div class="dots"></div>'
+  else if dataSource.getElementsByClassName('ss-video-thumb').length is 2 and mq.matches
+    tempHTML += '<div onclick="playVid(0)" class="ss-video-container"><img alt="student video thumb" class="ss-vid-thumb"' +
+      'src="' + dataSource.getElementsByClassName('ss-video-thumb')[0].innerHTML + '" /></div><div onclick="playVid(1)" class="ss-video-container">' +
+      '<img alt="student video thumb" class="ss-vid-thumb" src="' + dataSource.getElementsByClassName('ss-video-thumb')[1].innerHTML +
+      '" /></div><div class="dots"></div>'
   tempHTML += '<p class="ss-quote">' + dataSource.getElementsByClassName('ss-quote')[0].innerHTML + '</p>' +
-      '<a href="x36256"><img alt="call to action button" src="images/ace/student-stories-dev/gallery-button-01.jpg" onmouseover="this.src=\'images/ace/student-stories-dev/gallery-button-02.jpg\';" onmouseout="this.src=\'images/ace/student-stories-dev/gallery-button-01.jpg\'" /></a>'
+      '<a href="x36256.xml"><img alt="call to action button" src="images/ace/student-stories-dev/gallery-button-01.jpg" onmouseover="this.src=\'images/ace/student-stories-dev/gallery-button-02.jpg\';" onmouseout="this.src=\'images/ace/student-stories-dev/gallery-button-01.jpg\'" /></a>'
   container.innerHTML = tempHTML
-  if document.getElementsByClassName('video-wrapper-wrapper').length
-    $('.video-wrapper-wrapper').height($('.video-wrapper').outerHeight())
+  if document.getElementsByClassName('ss-video-thumb').length > 1
+    setTimeout(setVideoContainer, 2000)
   return
 
-@playVid = () ->
-  document.getElementsByClassName('ss-video-container')[0].innerHTML =
-    '<iframe class="ss-player" frameborder="0" height="562.5" src="https://player.vimeo.com/video/' +
-    document.getElementsByClassName('student-profile')[0].getElementsByClassName('ss-video-link')[0].innerHTML +
-    '?color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1" width="1000"></iframe>'
-  setIFrameRatio()
+@setVideoContainer = () ->
+  $('.video-wrapper-wrapper').height($('.video-wrapper').outerHeight())
+  return
+  
+@playVid = (n = 0) ->
+  document.getElementsByClassName('ss-video-container')[n].innerHTML =
+    '<div class="video"><iframe class="ss-player" frameborder="0" height="562.5" src="https://player.vimeo.com/video/' +
+    document.getElementsByClassName('student-profile')[0].getElementsByClassName('ss-video-link')[n].innerHTML +
+    '?color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1" width="1000"></iframe></div>'
   return
   
 @selectVid = (video) ->
@@ -48,9 +57,9 @@ $(document).ready ->
       $(video).addClass 'active'
       if $('#video-right').hasClass 'active'
         $('#video-right').removeClass 'active'
-      document.getElementById('video-left').innerHTML = '<iframe class="ss-player" frameborder="0" height="562.5" src="https://player.vimeo.com/video/' +
+      document.getElementById('video-left').innerHTML = '<div class="video"><iframe class="ss-player" frameborder="0" height="562.5" src="https://player.vimeo.com/video/' +
           document.getElementsByClassName('student-profile')[0].getElementsByClassName('ss-video-link')[0].innerHTML +
-          '?color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1" width="1000"></iframe>'
+          '?color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1" width="1000"></iframe></div>'
     
     else if ($(video).is '#video-right') and (not $(video).hasClass 'active')
       document.getElementById('video-left').innerHTML = '<img class="video-thumb" src="' +
@@ -65,9 +74,9 @@ $(document).ready ->
       $(video).addClass 'active'
       if $('#video-left').hasClass 'active'
         $('#video-left').removeClass 'active'
-      document.getElementById('video-right').innerHTML = '<iframe class="ss-player" frameborder="0" height="562.5" src="https://player.vimeo.com/video/' +
+      document.getElementById('video-right').innerHTML = '<div class="video"><iframe class="ss-player" frameborder="0" height="562.5" src="https://player.vimeo.com/video/' +
           document.getElementsByClassName('student-profile')[0].getElementsByClassName('ss-video-link')[1].innerHTML +
-          '?color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1" width="1000"></iframe>'
+          '?color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1" width="1000"></iframe></div>'
   setTimeout(setIFrameRatio, 200)
   return
   

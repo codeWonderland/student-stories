@@ -1,7 +1,8 @@
 .ssDesktop {
     background-image: url('images/ace/student-stories-dev/input.jpg');
     background-size: cover;
-    border: 2px solid rgb(88,88,90);
+    border: 1px solid rgb(88,88,90);
+    border-bottom: 2px solid rgb(88,88,90);
 }
 
 .ccLeadContent {
@@ -32,12 +33,10 @@ html body #content #sidebar .chosen-container.chosen-container-single {
 }
 
 #content #sidebar .ssButton {
-    width: 100%!important;
-    margin-bottom: 0!important;
-    bottom: 0;
-    margin-left: 0!important;
-    margin-right: 0!important;
+    width: 86%!important;
+    margin-left: 8%!important;
     border: 0!important;
+    background-color: rgb(49,164,297)!important;
 }
 
 p.ccLeadSubmit {
