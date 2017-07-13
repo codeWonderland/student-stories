@@ -39,13 +39,6 @@
   .callout.sidebar-item.video-display {
     display: none;
   }
-
-  .dots {
-    height: 10px;
-    width: 100%;
-    background-image: url('images/ace/student-stories-dev/dots-01.png');
-    background-repeat: repeat-x;
-  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -103,5 +96,13 @@
 
   .ms-sub {
     margin-top: 0;
+  }
+
+  .dots {
+    margin-top: 20px;
+    height: 30px;
+    width: 100%;
+    background-image: url('https://www.champlain.edu/images/ace/student-stories-dev/dots-01.png');
+    background-repeat: repeat-x;
   }
 }

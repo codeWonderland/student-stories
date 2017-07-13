@@ -29,13 +29,7 @@
     width: 21% !important; }
 
   .callout.sidebar-item.video-display {
-    display: none; }
-
-  .dots {
-    height: 10px;
-    width: 100%;
-    background-image: url("images/ace/student-stories-dev/dots-01.png");
-    background-repeat: repeat-x; } }
+    display: none; } }
 @media only screen and (max-width: 768px) {
   .student-table {
     display: none; }
@@ -81,6 +75,13 @@
     margin-bottom: 0; }
 
   .ms-sub {
-    margin-top: 0; } }
+    margin-top: 0; }
+
+  .dots {
+    margin-top: 20px;
+    height: 30px;
+    width: 100%;
+    background-image: url("https://www.champlain.edu/images/ace/student-stories-dev/dots-01.png");
+    background-repeat: repeat-x; } }
 
 /*# sourceMappingURL=meet-our-students.css.map */

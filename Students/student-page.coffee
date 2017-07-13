@@ -10,12 +10,6 @@ $(document).ready ->
     dataSource.getElementsByClassName('ss-home')[0].innerHTML + '</h2>' + '<div class="dots"></div>'
   
   if mq.matches
-    # Inserting Photo and Short Quote
-    tempHTML += '<img class="student-photo" src="' + dataSource.getElementsByClassName('ss-image')[0].innerHTML + '" /><p class="ss-squote">' + dataSource.getElementsByClassName('ss-squote')[0].innerHTML + '</p><div class="dots"></div>'
-    
-    # Inserting Quote
-    tempHTML += '<p class="ss-quote">' + dataSource.getElementsByClassName('ss-quote')[0].innerHTML + '</p><div class="dots"></div>'
-    
     #If one video only
     if dataSource.getElementsByClassName('ss-video-thumb').length is 1
       tempHTML += '<div onclick="playVid()" class="ss-video-container"><img class="ss-vid-thumb" alt="student video thumb" src="' +
@@ -27,6 +21,16 @@ $(document).ready ->
         'src="' + dataSource.getElementsByClassName('ss-video-thumb')[0].innerHTML + '" /></div><div onclick="playVid(1)" class="ss-video-container">' +
         '<img alt="student video thumb" class="ss-vid-thumb" src="' + dataSource.getElementsByClassName('ss-video-thumb')[1].innerHTML +
         '" /></div><div class="dots"></div>'
+    
+    # Else Inserting Photo
+    else tempHTML += '<img class="student-photo" src="' + dataSource.getElementsByClassName('ss-image')[0].innerHTML + '" />'
+
+    # Inserting Short Quote
+    tempHTML += '<p class="ss-squote">' + dataSource.getElementsByClassName('ss-squote')[0].innerHTML + '</p><div class="dots"></div>'
+    
+    # Inserting Quote
+    tempHTML += '<p class="ss-quote">' + dataSource.getElementsByClassName('ss-quote')[0].innerHTML + '</p><div class="dots"></div>'
+    
     
     # Inserting Link
     tempHTML += '<a href="x36256.xml" class="meetStudentsButton"><img alt="call to action button" src="images/ace/student-stories-dev/gallery-button-01.jpg" onmouseover="this.src=\'images/ace/student-stories-dev/gallery-button-02.jpg\';" onmouseout="this.src=\'images/ace/student-stories-dev/gallery-button-01.jpg\'" /></a>'
@@ -46,6 +50,9 @@ $(document).ready ->
           dataSource.getElementsByClassName('ss-video-thumb')[1].innerHTML + '" /></div></div><div class="dots"></div>'
     # Inserting Quote
     tempHTML += '<p class="ss-quote">' + dataSource.getElementsByClassName('ss-quote')[0].innerHTML + '</p>'
+    
+    # Inserting Link
+    tempHTML += '<a href="x36256.xml"><img alt="call to action button" src="images/ace/student-stories-dev/gallery-button-01.jpg" onmouseover="this.src=\'images/ace/student-stories-dev/gallery-button-02.jpg\';" onmouseout="this.src=\'images/ace/student-stories-dev/gallery-button-01.jpg\'" /></a>'
   
   
   # Putting html into the DOM

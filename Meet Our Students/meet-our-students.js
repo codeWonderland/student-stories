@@ -14,12 +14,13 @@
   });
 
   this.initStack = function() {
-    var $image, $src, cnt, data, datum, i, j, len, len1, photo, r, ref;
+    var $image, $src, cnt, data, datum, j, k, len, len1, photo, r, ref;
     $src = $('.student-table')[0];
     data = $src.getElementsByTagName('img');
+    data = reverseArray(data);
     cnt = 0;
-    for (i = 0, len = data.length; i < len; i++) {
-      datum = data[i];
+    for (j = 0, len = data.length; j < len; j++) {
+      datum = data[j];
       $image = new Image();
       $image.src = datum.getAttribute('src');
       ++cnt;
@@ -36,10 +37,22 @@
       }
     }
     ref = document.getElementsByClassName('photo-container')[0].getElementsByTagName('img');
-    for (j = 0, len1 = ref.length; j < len1; j++) {
-      photo = ref[j];
+    for (k = 0, len1 = ref.length; k < len1; k++) {
+      photo = ref[k];
       initHammer(photo);
     }
+  };
+
+  this.reverseArray = function(array) {
+    var i, temp;
+    i = array.length;
+    temp = [];
+    while (i >= 0) {
+      temp.push(array[i]);
+      i--;
+    }
+    temp.shift();
+    return temp;
   };
 
   this.initHammer = function(el) {
