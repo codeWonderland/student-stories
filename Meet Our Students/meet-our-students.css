@@ -1,0 +1,86 @@
+@media only screen and (min-width: 768px) {
+  .student-table {
+    border-collapse: separate;
+    margin: 0;
+    border-spacing: 20px;
+    width: 100%; }
+
+  .student-table td {
+    margin: 7.5px;
+    padding: 0; }
+
+  .student-table td img {
+    width: 100%;
+    height: auto; }
+
+  div#content {
+    width: 100%; }
+
+  #side-nav, .photo-container, .album-src, .ms-heading, .ms-sub {
+    display: none; }
+
+  #column-container-2 {
+    width: 94%; }
+
+  #content-wrapper {
+    width: 68% !important; }
+
+  div#column-container-2 #sidebar {
+    width: 21% !important; }
+
+  .callout.sidebar-item.video-display {
+    display: none; }
+
+  .dots {
+    height: 10px;
+    width: 100%;
+    background-image: url("images/ace/student-stories-dev/dots-01.png");
+    background-repeat: repeat-x; } }
+@media only screen and (max-width: 768px) {
+  .student-table {
+    display: none; }
+
+  .photo-container {
+    width: 350px;
+    height: 250px;
+    margin: auto;
+    margin-top: 50px;
+    z-index: 100;
+    position: relative; }
+    .photo-container img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -moz-box-shadow: 1px 1px 10px #000;
+      -webkit-box-shadow: 1px 1px 10px #000;
+      box-shadow: 1px 1px 10px #000; }
+
+  .loading {
+    background: #121212 url(../Images/ace/loading.gif) no-repeat 50% 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=70); }
+
+  .album-src {
+    display: none; }
+
+  .end-text {
+    font-size: 1.3em;
+    text-align: center; }
+
+  a.btn.center-btn {
+    margin-left: 34%;
+    width: 23%;
+    margin-right: 34%; }
+
+  .ms-heading {
+    margin-bottom: 0; }
+
+  .ms-sub {
+    margin-top: 0; } }
+
+/*# sourceMappingURL=meet-our-students.css.map */

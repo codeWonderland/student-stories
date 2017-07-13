@@ -39,10 +39,20 @@ div#column-container-2 #sidebar {
     margin: 1%;
 }
 
-.right-btn {
-    float: right;
-    margin-right: 5%;
-    margin-bottom: 2%!important;
+@media only screen and (min-width: 768px) {
+    .right-btn {
+        float: right;
+        margin-right: 5%;
+        margin-bottom: 2%!important;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .right-btn img {
+        width: 85%;
+        margin: -40px 7% 20px 7%;
+    }
+
 }
 
 .ss-video-container {

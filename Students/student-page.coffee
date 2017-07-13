@@ -2,28 +2,58 @@ mq = window.matchMedia( "(max-width: 768px)" )
 $(document).ready ->
   container = document.getElementsByClassName('student-container')[0]
   dataSource = document.getElementsByClassName('student-profile')[0]
+  
+  # Inserting Intro Section
   tempHTML = '<h1 class="ss-title">MEET ' + dataSource.getElementsByClassName('ss-name')[0].innerHTML + ', ' +
     dataSource.getElementsByClassName('ss-grad')[0].innerHTML + '</h1>' +
     '<h2 class="ss-subtitle">' + dataSource.getElementsByClassName('ss-major')[0].innerHTML + '<br />' +
     dataSource.getElementsByClassName('ss-home')[0].innerHTML + '</h2>' + '<div class="dots"></div>'
-  if dataSource.getElementsByClassName('ss-video-thumb').length is 1
-    tempHTML += '<div onclick="playVid()" class="ss-video-container"><img class="ss-vid-thumb" alt="student video thumb" src="' +
-      dataSource.getElementsByClassName('ss-video-thumb')[0].innerHTML + '" /></div><div class="dots"></div>'
-  else if dataSource.getElementsByClassName('ss-video-thumb').length is 2 and not mq.matches
-    tempHTML += '<div class="video-wrapper-wrapper"><div class="video-wrapper" onclick="selectVid(this)" id="video-left">' +
-      '<img class="video-thumb" alt="student video thumb" src="' +
-      dataSource.getElementsByClassName('ss-video-thumb')[0].innerHTML + '" /></div><div class="video-wrapper" onclick="selectVid(this)" id="video-right">' +
-      '<img class="video-thumb" alt="student video thumb" src="' +
-      dataSource.getElementsByClassName('ss-video-thumb')[1].innerHTML + '" /></div></div><div class="dots"></div>'
-  else if dataSource.getElementsByClassName('ss-video-thumb').length is 2 and mq.matches
-    tempHTML += '<div onclick="playVid(0)" class="ss-video-container"><img alt="student video thumb" class="ss-vid-thumb"' +
-      'src="' + dataSource.getElementsByClassName('ss-video-thumb')[0].innerHTML + '" /></div><div onclick="playVid(1)" class="ss-video-container">' +
-      '<img alt="student video thumb" class="ss-vid-thumb" src="' + dataSource.getElementsByClassName('ss-video-thumb')[1].innerHTML +
-      '" /></div><div class="dots"></div>'
-  tempHTML += '<p class="ss-quote">' + dataSource.getElementsByClassName('ss-quote')[0].innerHTML + '</p>' +
-      '<a href="x36256.xml"><img alt="call to action button" src="images/ace/student-stories-dev/gallery-button-01.jpg" onmouseover="this.src=\'images/ace/student-stories-dev/gallery-button-02.jpg\';" onmouseout="this.src=\'images/ace/student-stories-dev/gallery-button-01.jpg\'" /></a>'
+  
+  if mq.matches
+    # Inserting Photo and Short Quote
+    tempHTML += '<img class="student-photo" src="' + dataSource.getElementsByClassName('ss-image')[0].innerHTML + '" /><p class="ss-squote">' + dataSource.getElementsByClassName('ss-squote')[0].innerHTML + '</p><div class="dots"></div>'
+    
+    # Inserting Quote
+    tempHTML += '<p class="ss-quote">' + dataSource.getElementsByClassName('ss-quote')[0].innerHTML + '</p><div class="dots"></div>'
+    
+    #If one video only
+    if dataSource.getElementsByClassName('ss-video-thumb').length is 1
+      tempHTML += '<div onclick="playVid()" class="ss-video-container"><img class="ss-vid-thumb" alt="student video thumb" src="' +
+        dataSource.getElementsByClassName('ss-video-thumb')[0].innerHTML + '" /></div><div class="dots"></div>'
+    
+    # If two videos on mobile
+    else if dataSource.getElementsByClassName('ss-video-thumb').length is 2 and mq.matches
+      tempHTML += '<div onclick="playVid(0)" class="ss-video-container"><img alt="student video thumb" class="ss-vid-thumb"' +
+        'src="' + dataSource.getElementsByClassName('ss-video-thumb')[0].innerHTML + '" /></div><div onclick="playVid(1)" class="ss-video-container">' +
+        '<img alt="student video thumb" class="ss-vid-thumb" src="' + dataSource.getElementsByClassName('ss-video-thumb')[1].innerHTML +
+        '" /></div><div class="dots"></div>'
+    
+    # Inserting Link
+    tempHTML += '<a href="x36256.xml" class="meetStudentsButton"><img alt="call to action button" src="images/ace/student-stories-dev/gallery-button-01.jpg" onmouseover="this.src=\'images/ace/student-stories-dev/gallery-button-02.jpg\';" onmouseout="this.src=\'images/ace/student-stories-dev/gallery-button-01.jpg\'" /></a>'
+    
+  else
+    #If one video only
+    if dataSource.getElementsByClassName('ss-video-thumb').length is 1
+      tempHTML += '<div onclick="playVid()" class="ss-video-container"><img class="ss-vid-thumb" alt="student video thumb" src="' +
+          dataSource.getElementsByClassName('ss-video-thumb')[0].innerHTML + '" /></div><div class="dots"></div>'
+
+    # If two videos on desktop
+    else if dataSource.getElementsByClassName('ss-video-thumb').length is 2 and not mq.matches
+      tempHTML += '<div class="video-wrapper-wrapper"><div class="video-wrapper" onclick="selectVid(this)" id="video-left">' +
+          '<img class="video-thumb" alt="student video thumb" src="' +
+          dataSource.getElementsByClassName('ss-video-thumb')[0].innerHTML + '" /></div><div class="video-wrapper" onclick="selectVid(this)" id="video-right">' +
+          '<img class="video-thumb" alt="student video thumb" src="' +
+          dataSource.getElementsByClassName('ss-video-thumb')[1].innerHTML + '" /></div></div><div class="dots"></div>'
+    # Inserting Quote
+    tempHTML += '<p class="ss-quote">' + dataSource.getElementsByClassName('ss-quote')[0].innerHTML + '</p>'
+  
+  
+  # Putting html into the DOM
   container.innerHTML = tempHTML
-  if document.getElementsByClassName('ss-video-thumb').length > 1
+  
+  # If this is desktop and there are two videos then we need to adjust the height of the surrounding container to
+  # Compensate for the fact that the videos are floating
+  if not mq.matches and document.getElementsByClassName('ss-video-thumb').length > 1
     setTimeout(setVideoContainer, 2000)
   return
 

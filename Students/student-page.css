@@ -60,8 +60,20 @@ h2.ss-subtitle {
   margin-top: 0;
   line-height: 1.3em; }
 
+.ss-squote {
+  margin-top: 7px;
+  font-size: 1.3em; }
+
 @media only screen and (max-width: 768px) {
-  .video-thumb {
-    margin: 10px !important; } }
+  .ss-video-container {
+    margin: 10px !important; }
+
+  .meetStudentsButton img {
+    width: 85%;
+    margin: 10px 7% 20px 7%; }
+
+  img.student-photo {
+    width: 100%;
+    margin: 10px 0 10px 0; } }
 
 /*# sourceMappingURL=student-page.css.map */

@@ -39,6 +39,7 @@ $(document).ready ->
   while i < feats.length
     document.getElementById("feature-video").innerHTML += '<div class="video" onclick="playMobileVid(' + i + ')"><img alt="picture of student" src="' + feats[i].getElementsByClassName('thumbnail-url')[0].innerHTML + '" /></div>'
     i++
+  $('<br /><div class="dots"></div>').insertAfter('.right-btn')
   return
   
 @playMobileVid = (n) ->
