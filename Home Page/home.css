@@ -80,3 +80,11 @@ h2.ss-subtitle {
     background-image: url('https://www.champlain.edu/images/ace/student-stories-dev/dots-01.png');
     background-repeat: repeat-x;
 }
+
+.ss-video-container:hover, .preview-item:hover {
+    transform: scale(1.04);
+    -ms-transform: scale(1.04);
+    -webkit-transform: scale(1.04);
+    box-shadow: 0 0 17px rgba(0, 169, 224, 0.35);
+    cursor: pointer;
+}
