@@ -18,6 +18,12 @@
   width: 51%;
   height: auto; }
 
+.ss-video-container:hover, .video-wrapper:hover {
+  transform: scale(1.04);
+  -ms-transform: scale(1.04);
+  -webkit-transform: scale(1.04);
+  cursor: pointer; }
+
 .video-thumb {
   width: 100%; }
 
