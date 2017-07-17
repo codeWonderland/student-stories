@@ -40,9 +40,9 @@ div#column-container-2 #sidebar {
 }
 
 @media only screen and (min-width: 768px) {
-    .right-btn {
-        float: right;
-        margin-right: 5%;
+    .left-btn {
+        float: left;
+        margin-left: 5%;
         margin-bottom: 2%!important;
     }
 }
