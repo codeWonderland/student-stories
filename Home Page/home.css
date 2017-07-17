@@ -48,9 +48,13 @@ div#column-container-2 #sidebar {
 }
 
 @media only screen and (max-width: 768px) {
-    .right-btn img {
+    .left-btn img {
         width: 85%;
         margin: -40px 7% 20px 7%;
+    }
+
+    .nav-item.microsite-link-box {
+        display: none;
     }
 
 }

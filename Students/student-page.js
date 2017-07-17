@@ -30,6 +30,9 @@
       tempHTML += '<a href="x36256.xml"><img alt="call to action button" src="images/ace/student-stories-dev/gallery-button-01.jpg" onmouseover="this.src=\'images/ace/student-stories-dev/gallery-button-02.jpg\';" onmouseout="this.src=\'images/ace/student-stories-dev/gallery-button-01.jpg\'" /></a>';
     }
     container.innerHTML = tempHTML;
+    if (!mq.matches) {
+      document.getElementById('landing-image').getElementsByClassName('caption')[0].style.backgroundColor = document.getElementsByClassName('ss-color')[0].innerHTML;
+    }
     if (!mq.matches && document.getElementsByClassName('ss-video-thumb').length > 1) {
       setTimeout(setVideoContainer, 2000);
     }

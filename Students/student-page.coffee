@@ -58,6 +58,9 @@ $(document).ready ->
   # Putting html into the DOM
   container.innerHTML = tempHTML
   
+  # Changing the caption background
+  document.getElementById('landing-image').getElementsByClassName('caption')[0].style.backgroundColor = document.getElementsByClassName('ss-color')[0].innerHTML if not mq.matches
+  
   # If this is desktop and there are two videos then we need to adjust the height of the surrounding container to
   # Compensate for the fact that the videos are floating
   if not mq.matches and document.getElementsByClassName('ss-video-thumb').length > 1
