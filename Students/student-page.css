@@ -37,6 +37,9 @@
   background-image: url("https://www.champlain.edu/images/ace/student-stories-dev/dots-01.png");
   background-repeat: repeat-x; }
 
+footer {
+  display: none; }
+
 div#content {
   width: 100%; }
 

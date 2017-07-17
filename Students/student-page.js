@@ -44,6 +44,9 @@
       n = 0;
     }
     document.getElementsByClassName('ss-video-container')[n].innerHTML = '<div class="video"><iframe class="ss-player" frameborder="0" height="562.5" src="https://player.vimeo.com/video/' + document.getElementsByClassName('student-profile')[0].getElementsByClassName('ss-video-link')[n].innerHTML + '?color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1" width="1000"></iframe></div>';
+    if (!mq.matches) {
+      setIFrameRatio();
+    }
   };
 
   this.selectVid = function(video) {
