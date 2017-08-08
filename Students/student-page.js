@@ -27,19 +27,27 @@
         tempHTML += '<div class="video-wrapper-wrapper"><div class="video-wrapper" onclick="selectVid(this)" id="video-left">' + '<img class="video-thumb" alt="student video thumb" src="' + dataSource.getElementsByClassName('ss-video-thumb')[0].innerHTML + '" /></div><div class="video-wrapper" onclick="selectVid(this)" id="video-right">' + '<img class="video-thumb" alt="student video thumb" src="' + dataSource.getElementsByClassName('ss-video-thumb')[1].innerHTML + '" /></div></div><div class="dots"></div>';
       }
       tempHTML += '<p class="ss-quote">' + dataSource.getElementsByClassName('ss-quote')[0].innerHTML + '</p>';
-      tempHTML += '<a href="x36256.xml"><img alt="call to action button" src="images/ace/student-stories-dev/gallery-button-01.jpg" onmouseover="this.src=\'images/ace/student-stories-dev/gallery-button-02.jpg\';" onmouseout="this.src=\'images/ace/student-stories-dev/gallery-button-01.jpg\'" /></a>';
+      tempHTML += '<a href="x36256.xml" class="meetStudentsButton"><img alt="call to action button" src="images/ace/student-stories-dev/gallery-button-01.jpg" onmouseover="this.src=\'images/ace/student-stories-dev/gallery-button-02.jpg\';" onmouseout="this.src=\'images/ace/student-stories-dev/gallery-button-01.jpg\'" /></a>';
     }
     container.innerHTML = tempHTML;
     if (!mq.matches) {
       document.getElementById('landing-image').getElementsByClassName('caption')[0].style.backgroundColor = document.getElementsByClassName('ss-color')[0].innerHTML;
     }
     if (!mq.matches && document.getElementsByClassName('ss-video-thumb').length > 1) {
+      container.getElementsByClassName('dots')[1].style.display = 'none';
+      container.getElementsByClassName('ss-quote')[0].style.display = 'none';
+      container.getElementsByClassName('meetStudentsButton')[0].style.display = 'none';
       setTimeout(setVideoContainer, 2000);
     }
   });
 
   this.setVideoContainer = function() {
+    var container;
+    container = document.getElementsByClassName('student-container')[0];
     $('.video-wrapper-wrapper').height($('.video-wrapper').outerHeight());
+    container.getElementsByClassName('dots')[1].style.display = 'block';
+    container.getElementsByClassName('ss-quote')[0].style.display = 'block';
+    container.getElementsByClassName('meetStudentsButton')[0].style.display = 'inline';
   };
 
   this.playVid = function(n) {
