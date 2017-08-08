@@ -16,7 +16,7 @@ $(document).ready ->
   html = ""
   for i in [0...feats.length]
     if not feats[i].classList.contains "active"
-      html += '<img src="' + feats[i].getElementsByClassName("thumbnail-url")[0].innerHTML + '" class="preview-item champ-card" onclick="setActiveFeature(' + i + ')" />'
+      html += '<img alt="picture of student" src="' + feats[i].getElementsByClassName("thumbnail-url")[0].innerHTML + '" class="preview-item champ-card" onclick="setActiveFeature(' + i + ')" />'
   
   document.getElementById("preview-container").innerHTML = html
   return
