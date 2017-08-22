@@ -70,6 +70,7 @@ $(document).ready ->
     setTimeout(setVideoContainer, 2000)
   return
 
+# Setting the height of the container for pages on desktop with two videos
 @setVideoContainer = () ->
   container = document.getElementsByClassName('student-container')[0]
   $('.video-wrapper-wrapper').height($('.video-wrapper').outerHeight())
@@ -77,16 +78,19 @@ $(document).ready ->
   container.getElementsByClassName('ss-quote')[0].style.display = 'block'
   container.getElementsByClassName('meetStudentsButton')[0].style.display = 'inline'
   return
-  
+
+# play video for pages that only have one video
 @playVid = (n = 0) ->
   document.getElementsByClassName('ss-video-container')[n].innerHTML =
     '<div class="video"><iframe class="ss-player" frameborder="0" height="562.5" src="https://player.vimeo.com/video/' +
     document.getElementsByClassName('student-profile')[0].getElementsByClassName('ss-video-link')[n].innerHTML +
     '?color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1" width="1000"></iframe></div>'
+  # in the event that we are on desktop we want the iframe to not have black bars surrounding it, so we adjust it's size
   if not mq.matches
     setIFrameRatio()
   return
-  
+
+# for pages with two videos, we want to create an animation to make the selected video larger and then set it to play
 @selectVid = (video) ->
   if $('.video-wrapper').length > 1
     if not $('.active').length
