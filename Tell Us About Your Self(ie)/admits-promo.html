@@ -1,0 +1,121 @@
+<style><!--
+.student {
+    background-color: #00a9e0;
+}
+
+p.student-question {
+    color: white;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.card-component-padded.card-text.student-data {
+    padding: 2rem;
+}
+
+.student-answer-container {
+    margin: 1rem 0;
+    background-color: white;
+    padding: 1rem;
+    text-align: center;
+    color: black;
+    position: relative;
+}
+
+h2.student-answer {
+    margin-bottom: 0;
+    color: black;
+}
+
+p.student-info {
+    margin-top: 7px;
+    font-size: 14px;
+    color: #5a5a5a;
+}
+
+p.student-sub-answer {
+    font-size: 14px;
+    color: #5a5a5a;
+}
+
+.student-answer-container:after {
+    display: block;
+    width: 0;
+    content: ' ';
+    position: absolute;
+    border-bottom: 20px solid transparent;
+    border-left: 20px solid white;
+    border-top: 20px solid transparent;
+    right: -20px;
+    top: 31%;
+}
+
+.card-component-image.card-component-image-right img {
+    width: 100%;
+}
+
+@media only screen and (max-width: 768px)
+{
+    .student
+    {
+        margin: 1rem 0;
+    }
+}
+--></style>
+<p><img alt="Tell Us About Your Self(ie) banner image" src="Images/TUAYS/TUAYS_Admits_Hero_Cyan.gif" style="width: 100%; height: auto;" /></p>
+<h1>Get Ready to Be Champlain Famous!</h1>
+<p>We created Tell Us About Yourself(ie) as a goofy, off -the-wall way to say, &ldquo;Hey,&rdquo; and introduce yourself to your soon-to-be classmates. All you need to do is answer at least 10 of our quirky fact questions&mdash;make sure you tell us at least one thing no one but you would know&mdash;on the form at <a href="https://champlain.edu/yourselfie">champlain.edu/yourselfie</a>. Then, upload a glamour shot, um, selfie, and you&rsquo;re done. If we like your answers, we&rsquo;ll highlight your profile and share your answers with your future Class (PS, there is almost no way we won&rsquo;t love them&mdash;you&rsquo;re family now!).</p>
+<h2>Featured Profiles</h2>
+<p>Tell Us About Yourself(ie) is an annual Champlain tradition, and we always have super strong participation. While we wait for the enrollment commitments to roll in and bold souls to start submitting their selfies, check out these samples below from the Class of 2021 (+ Chauncey T. Beaver, our mascot). We&rsquo;ll be posting the new batch as soon as they start rolling in, so keep coming back, and <a href="https://champlain.edu/yourselfie">Tell Us About YOURSelf(ie)</a> today!</p>
+<p>
+    <script type="text/javascript">// <![CDATA[
+    document.addEventListener("DOMContentLoaded", function() {
+        // ID of the Google Spreadsheet
+        var spreadsheetID = "1TSXq9Q3Kzwow5d4l6ueUyhQk6H1etZf6gDCSb63f_K4";
+
+        // Make sure it is public or set to "anyone with link can view" or we can't pull the JSON
+        var url = "https://spreadsheets.google.com/feeds/list/" + spreadsheetID + "/od6/public/values?alt=json";
+
+        $.getJSON(url, function(data) {
+            var entry = data.feed.entry;
+
+            $(entry).each(function() {
+                $('#students').append(formatStudentHTML(this));
+            });
+        });
+    });
+
+    function formatStudentHTML(spreadsheetEntry) {
+        var result = '<div class="card-component student">' +
+            '           <div class="card-component-padded card-text student-data">' +
+            '                <p class="student-question">' + spreadsheetEntry.gsx$featuredquestion.$t + '</p>' +
+            '                <div class="student-answer-container">';
+
+        if (spreadsheetEntry.gsx$subanswer.$t !== "") {
+            result += '         <h2 class="student-answer">"' + spreadsheetEntry.gsx$answer.$t + '</h2>' +
+                '               <p class="student-sub-answer">' + spreadsheetEntry.gsx$subanswer.$t + '"</p>';
+        }
+        else
+        {
+            result += '         <h2 class="student-answer">"' + spreadsheetEntry.gsx$answer.$t + '"</h2>';
+        }
+
+        result += '             <p class="student-info">&mdash;' + spreadsheetEntry.gsx$name.$t + (spreadsheetEntry.gsx$year.$t !== "" ? spreadsheetEntry.gsx$year.$t : '') + ' // ' + spreadsheetEntry.gsx$major.$t + ' // ' + spreadsheetEntry.gsx$hometown.$t;
+
+        result += '         </div>';
+
+        result += '     </div>';
+
+        result += '     <div class="card-component-image card-component-image-right">';
+
+        result += '         <img src="' + spreadsheetEntry.gsx$imageurl.$t + '" alt="' + spreadsheetEntry.gsx$name.$t + '">';
+
+        result += '     </div>';
+
+        result += '   </div>';
+
+        return result;
+    }
+    // ]]></script>
+</p>
+<div id="students"></div>
