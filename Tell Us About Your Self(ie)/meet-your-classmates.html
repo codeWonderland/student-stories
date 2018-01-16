@@ -1,12 +1,3 @@
-<style>
-    .gallery-student
-    {
-        width: 31.5%;
-        float: left;
-        margin: 0.75%;
-        padding: 0!important;
-    }
-</style>
 <p>
     <script type="text/javascript">// <![CDATA[
     (function($){
@@ -111,26 +102,7 @@
             }
 
             function formatStudentHTML(spreadsheetEntry) {
-                console.log('formatting a student');
-                console.log(spreadsheetEntry);
-                var result = '<div class="card-component card-component-round-corners card-component-shadow gallery-student" data-student-id="' + spreadsheetEntry.row + '">';
 
-                result += '     <div class="student-image">';
-
-                result += '         <img style="max-width: unset!important; width: 100%;" src="' + spreadsheetEntry.image_url + '" alt="' + spreadsheetEntry.name + '">';
-
-                result += '     </div>';
-
-                result += '       <div class="card-component-padded card-text student-data" style="width: 100%!important; height: 250px; overflow: hidden; max-height: 250px;">' +
-                    '                <h2 class="student-quip">' + spreadsheetEntry.short_quip + '</h2>';
-
-                result += '          <p class="student-info">&mdash;' + spreadsheetEntry.name + (spreadsheetEntry.year !== "" ? ', \'' + spreadsheetEntry.year : '');
-
-                result += '      </div>';
-
-                result += '   </div>';
-
-                return result;
             }
         });
     })(jQuery);
