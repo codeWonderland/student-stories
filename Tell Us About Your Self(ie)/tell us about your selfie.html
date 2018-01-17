@@ -1,139 +1,176 @@
 <style>
     .gallery-student
     {
-        width: 31.5%;
-        float: left;
         margin: 0.75%;
         padding: 0!important;
+    }
+
+    .student-data
+    {
+        width: 100%!important;
+        overflow: hidden;
+        max-height: 250px;
+    }
+
+    h2.student-quip
+    {
+        color: black!important;
+    }
+
+    @media only screen and (min-width: 768px) {
+        .gallery-student
+        {
+            width: 31.5%;
+            float: left;
+        }
+
+        .student-data
+        {
+            height: 250px;
+        }
     }
 </style>
 <p>
     <script type="text/javascript">// <![CDATA[
-    (function($){
-        console.log('in the anon function');
-        $(document).ready(function(){
-            console.log('in the dom ready');
-            var students = null;
+    var ccWaitTries = 10;
+    (function waitForJQuery() {
+        if (window.$)
+        {
+            (function($){
+                console.log('in the anon function');
+                $(document).ready(function(){
+                    console.log('in the dom ready');
+                    var students = null;
 
-            // See if we have students
-            if (Modernizr.localstorage && localStorage.getItem('ccTuays') !== null) {
-                console.log('have students lcoally');
-                students = $.parseJSON(localStorage.getItem('ccTuays'));
-                // Make sure data is not expired
-                var twoHours = 1000 * 60 * 60 * 2, // 2 hours in milliseconds
-                    now = new Date().getTime();
-                if (students.date && now - students.date < twoHours) {
-                    students = students.records;
-                    handleStudents(students);
-                }
-                else{
-                    students = null;
-                }
-            }
-
-            if(!students) {
-                console.log('fetching students');
-                // Go get our students
-                var $xhrStudents = $.ajax({
-                    url: "https://forms.champlain.edu/googlespreadsheet/find/type/tradtuays",
-                    dataType: "jsonp"
-                });
-
-                $xhrStudents.done(function(data){
-                    // Some ugly error handling
-                    if (!data || !data.message || !Object.keys(data.message).length) {
-                        console.log('Had a problem loading student data! Data is: ');
-                        console.log(data);
-                        return;
+                    // See if we have students
+                    if (Modernizr.localstorage && localStorage.getItem('ccTuays') !== null) {
+                        console.log('have students lcoally');
+                        students = $.parseJSON(localStorage.getItem('ccTuays'));
+                        // Make sure data is not expired
+                        var twoHours = 1000 * 60 * 60 * 2, // 2 hours in milliseconds
+                            now = new Date().getTime();
+                        if (students.date && now - students.date < twoHours) {
+                            students = students.records;
+                            handleStudents(students);
+                        }
+                        else{
+                            students = null;
+                        }
                     }
 
+                    if(!students) {
+                        console.log('fetching students');
+                        // Go get our students
+                        var $xhrStudents = $.ajax({
+                            url: "https://forms.champlain.edu/googlespreadsheet/find/type/tradtuays",
+                            dataType: "jsonp"
+                        });
 
-                    if(data){
-                        console.log('data from sheet:');
-                        console.log(data);
-                        try {
-                            // Sort by row
-                            for(var student in data.message) {
-                                if(student.hasOwnProperty('row')){
-                                    data.sort(function(a,b){
-                                        if(a.row > b.row){
-                                            return 1;
+                        $xhrStudents.done(function(data){
+                            // Some ugly error handling
+                            if (!data || !data.message || !Object.keys(data.message).length) {
+                                console.log('Had a problem loading student data! Data is: ');
+                                console.log(data);
+                                return;
+                            }
+
+
+                            if(data){
+                                console.log('data from sheet:');
+                                console.log(data);
+                                try {
+                                    // Sort by row
+                                    for(var student in data.message) {
+                                        if(student.hasOwnProperty('row')){
+                                            data.sort(function(a,b){
+                                                if(a.row > b.row){
+                                                    return 1;
+                                                }
+                                                if(a.row < b.row) {
+                                                    return -1;
+                                                }
+                                                return 0;
+                                            });
                                         }
-                                        if(a.row < b.row) {
-                                            return -1;
-                                        }
-                                        return 0;
-                                    });
+                                    }
+                                } catch(e){
+                                    console.log(e);
                                 }
                             }
-                        } catch(e){
-                            console.log(e);
-                        }
+
+                            // Now store our data locally
+                            var storedData = {
+                                records: data.message,
+                                date: new Date().getTime()
+                            };
+
+                            if (Modernizr.localstorage && JSON && JSON.stringify) {
+                                localStorage.setItem('ccTuays', JSON.stringify(storedData));
+                            }
+
+                            students = storedData.records;
+                            handleStudents(students);
+                        });
                     }
 
-                    // Now store our data locally
-                    var storedData = {
-                        records: data.message,
-                        date: new Date().getTime()
-                    };
+                    function handleStudents(students){
+                        console.log(students);
+                        console.log('handling students');
+                        // For each student, format our student HTML and add it to the dom?
+                        // Or build up one long string and write to the dom once?
+                        var studentsString = '';
+                        var count = 0;
+                        $(students).each(function(student){
+                            console.log(students[student]);
+                            if (count === 0 || count % 3 === 0)
+                            {
+                                if (count !== 0)
+                                {
+                                    studentsString += '</div>';
+                                }
 
-                    if (Modernizr.localstorage && JSON && JSON.stringify) {
-                        localStorage.setItem('ccTuays', JSON.stringify(storedData));
+                                studentsString += '<div class="row">';
+                            }
+                            studentsString += formatStudentHTML(students[student]);
+                            count++
+                        });
+                        $('#students').html(studentsString);
                     }
 
-                    students = storedData.records;
-                    handleStudents(students);
+                    function formatStudentHTML(spreadsheetEntry) {
+                        console.log('formatting a student');
+                        console.log(spreadsheetEntry);
+                        var result = '<div class="card-component card-component-round-corners card-component-shadow gallery-student" data-student-id="' + spreadsheetEntry.row + '">';
+
+                        result += '     <div class="student-image">';
+
+                        result += '         <img style="max-width: unset!important; width: 100%;" src="' + spreadsheetEntry.image_url + '" alt="' + spreadsheetEntry.name + '">';
+
+                        result += '     </div>';
+
+                        result += '       <div class="card-component-padded card-text student-data">' +
+                            '                <h2 class="student-quip">' + spreadsheetEntry.short_quip + '</h2>';
+
+                        result += '          <p class="student-info">&mdash;' + spreadsheetEntry.name + (spreadsheetEntry.year !== "" ? ', \'' + spreadsheetEntry.year : '');
+
+                        result += '      </div>';
+
+                        result += '   </div>';
+
+                        return result;
+                    }
                 });
+            })(jQuery);
+        }
+        else
+        {
+            ccWaitTries--;
+            if (ccWaitTries > 0)
+            {
+                setTimeout(waitForJQuery, 50);
             }
-
-            function handleStudents(students){
-                console.log(students);
-                console.log('handling students');
-                // For each student, format our student HTML and add it to the dom?
-                // Or build up one long string and write to the dom once?
-                var studentsString = '';
-                var count = 0;
-                $(students).each(function(student){
-                    console.log(students[student]);
-                    if (count === 0 || count % 3 === 0)
-                    {
-                        if (count !== 0)
-                        {
-                            studentsString += '</div>';
-                        }
-
-                        studentsString += '<div class="row">';
-                    }
-                    studentsString += formatStudentHTML(students[student]);
-                    count++
-                });
-                $('#students').html(studentsString);
-            }
-
-            function formatStudentHTML(spreadsheetEntry) {
-                console.log('formatting a student');
-                console.log(spreadsheetEntry);
-                var result = '<div class="card-component card-component-round-corners card-component-shadow gallery-student" data-student-id="' + spreadsheetEntry.row + '">';
-
-                result += '     <div class="student-image">';
-
-                result += '         <img style="max-width: unset!important; width: 100%;" src="' + spreadsheetEntry.image_url + '" alt="' + spreadsheetEntry.name + '">';
-
-                result += '     </div>';
-
-                result += '       <div class="card-component-padded card-text student-data" style="width: 100%!important; height: 250px; overflow: hidden; max-height: 250px;">' +
-                    '                <h2 class="student-quip">' + spreadsheetEntry.short_quip + '</h2>';
-
-                result += '          <p class="student-info">&mdash;' + spreadsheetEntry.name + (spreadsheetEntry.year !== "" ? ', \'' + spreadsheetEntry.year : '');
-
-                result += '      </div>';
-
-                result += '   </div>';
-
-                return result;
-            }
-        });
-    })(jQuery);
+        }
+    })();
     // ]]></script>
 </p>
 <div id="students">Loading Selfies....</div>
