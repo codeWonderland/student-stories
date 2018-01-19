@@ -2,6 +2,19 @@
     h1.student-heading {
         margin-bottom: 0;
         font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    p.featured-student-info {
+        font-weight: bold;
+        color: #236192;
+        margin-bottom: 0;
+    }
+
+    p.featured-student-info:hover
+    {
+        color: #00a9e0;
+        cursor: pointer;
     }
 
     h2.student-major {
@@ -17,6 +30,22 @@
         line-height: 30px;
     }
 
+    .featured-student-image {
+        width: 50%;
+        float: left;
+        margin-right: 7px;
+    }
+
+    .featured-student-image:hover
+    {
+        cursor: pointer;
+    }
+
+    .featured-student-section
+    {
+        margin-top: 2rem;
+    }
+
     p.question {
         font-size: 24px;
         margin: 10px 0 0 0;
@@ -30,215 +59,289 @@
             width: 100%;
             height: auto;
         }
+
+        .meetStudentsButton img {
+            width: 85%;
+            margin: 10px 7% 20px 7%;
+        }
+    }
+
+    @media only screen and (min-width: 768px) {
+        .meetStudentsButton img {
+            width: 30%;
+        }
+
+        div.featured-student
+        {
+            width: 31%;
+            margin: 0.75%;
+            float: left;
+        }
+
+        a.meetStudentsButton img {
+            margin-top: 1rem;
+        }
     }
 </style>
 <p>
     <script type="text/javascript">// <![CDATA[
-    (function($){
-        console.log('in the anon function');
-        $(document).ready(function(){
-            console.log('in the dom ready');
-            var students = null;
+    var ccWaitTries = 10;
+    (function waitForJQuery()
+    {
+        if (window.$) {
+            (function($){
+                console.log('in the anon function');
+                $(document).ready(function(){
+                    console.log('in the dom ready');
+                    var students = null;
 
-            // See if we have students
-            if (Modernizr.localstorage && localStorage.getItem('ccTuays') !== null) {
-                console.log('have students lcoally');
-                students = $.parseJSON(localStorage.getItem('ccTuays'));
-                // Make sure data is not expired
-                var twoHours = 1000 * 60 * 60 * 2, // 2 hours in milliseconds
-                    now = new Date().getTime();
-                if (students.date && now - students.date < twoHours) {
-                    students = students.records;
-                    handleStudents(students);
-                }
-                else{
-                    students = null;
-                }
-            }
-
-            if(!students) {
-                console.log('fetching students');
-                // Go get our students
-                var $xhrStudents = $.ajax({
-                    url: "https://forms.champlain.edu/googlespreadsheet/find/type/tradtuays",
-                    dataType: "jsonp"
-                });
-
-                $xhrStudents.done(function(data){
-                    // Some ugly error handling
-                    if (!data || !data.message || !Object.keys(data.message).length) {
-                        console.log('Had a problem loading student data! Data is: ');
-                        console.log(data);
-                        return;
-                    }
-
-
-                    if(data){
-                        console.log('data from sheet:');
-                        console.log(data);
-                        try {
-                            // Sort by row
-                            for(var student in data.message) {
-                                if(student.hasOwnProperty('row')){
-                                    data.sort(function(a,b){
-                                        if(a.row > b.row){
-                                            return 1;
-                                        }
-                                        if(a.row < b.row) {
-                                            return -1;
-                                        }
-                                        return 0;
-                                    });
-                                }
-                            }
-                        } catch(e){
-                            console.log(e);
+                    // See if we have students
+                    if (Modernizr.localstorage && localStorage.getItem('ccTuays') !== null) {
+                        console.log('have students lcoally');
+                        students = $.parseJSON(localStorage.getItem('ccTuays'));
+                        // Make sure data is not expired
+                        var twoHours = 1000 * 60 * 60 * 2, // 2 hours in milliseconds
+                            now = new Date().getTime();
+                        if (students.date && now - students.date < twoHours) {
+                            students = students.records;
+                            handleStudents(students);
+                        }
+                        else{
+                            students = null;
                         }
                     }
 
-                    // Now store our data locally
-                    var storedData = {
-                        records: data.message,
-                        date: new Date().getTime()
-                    };
+                    if(!students) {
+                        console.log('fetching students');
+                        // Go get our students
+                        var $xhrStudents = $.ajax({
+                            url: "https://forms.champlain.edu/googlespreadsheet/find/type/tradtuays",
+                            dataType: "jsonp"
+                        });
 
-                    if (Modernizr.localstorage && JSON && JSON.stringify) {
-                        localStorage.setItem('ccTuays', JSON.stringify(storedData));
+                        $xhrStudents.done(function(data){
+                            // Some ugly error handling
+                            if (!data || !data.message || !Object.keys(data.message).length) {
+                                console.log('Had a problem loading student data! Data is: ');
+                                console.log(data);
+                                return;
+                            }
+
+
+                            if(data){
+                                console.log('data from sheet:');
+                                console.log(data);
+                                try {
+                                    // Sort by row
+                                    for(var student in data.message) {
+                                        if(student.hasOwnProperty('row')){
+                                            data.sort(function(a,b){
+                                                if(a.row > b.row){
+                                                    return 1;
+                                                }
+                                                if(a.row < b.row) {
+                                                    return -1;
+                                                }
+                                                return 0;
+                                            });
+                                        }
+                                    }
+                                } catch(e){
+                                    console.log(e);
+                                }
+                            }
+
+                            // Now store our data locally
+                            var storedData = {
+                                records: data.message,
+                                date: new Date().getTime()
+                            };
+
+                            if (Modernizr.localstorage && JSON && JSON.stringify) {
+                                localStorage.setItem('ccTuays', JSON.stringify(storedData));
+                            }
+
+                            students = storedData.records;
+                            handleStudents(students);
+                        });
                     }
 
-                    students = storedData.records;
-                    handleStudents(students);
-                });
-            }
-
-            // Function acquired from https://www.sitepoint.com/url-parameters-jquery/
-            function urlParam(name)
-            {
-                var results = new RegExp('[\?&]' + name + '=([^$#]*)').exec(window.location.href);
-                if (results == null)
-                    return null;
-                else
-                    return results[1] || 0;
-            }
-
-            function handleStudents(students){
-                console.log(students);
-                console.log('handling students');
-                // For each student, format our student HTML and add it to the dom?
-                // Or build up one long string and write to the dom once?
-                var studentString = '';
-                var featuredStudentsString = '';
-                // the function can return 0 or null, and in that case we want to just load the first row from the results
-                var row = (urlParam('row') != null && urlParam('row') != 0 ? urlParam('row') : 1);
-                var count = 0;
-                var foundStudent = false;
-                var maxFeatIndex = 3;
-                $(students).each(function(student){
-                    console.log(students[student]);
-                    console.log(students[student].row + " " + row);
-                    // We want to have a limited number of students in the bottom gallery of featured students
-                    if (count < maxFeatIndex) {
-                        // If our current student is a featured student we don't want to use that as a promoted student
-                        // As the user is already looking at that student, so we increase the number in the bottom by
-                        // one and skip this index
-                        if (students[student].row == row)
-                            maxFeatIndex++;
-                        else
-                            featuredStudentsString += formatFeaturedStudentHTML(students[student]);
-                        count++
-                    }
-                    // if this student is the one in the paramater then we will load it on our screen
-                    if (students[student].row == row)
+                    // Function acquired from https://www.sitepoint.com/url-parameters-jquery/
+                    function urlParam(name)
                     {
-                        foundStudent = true;
-                        studentString += formatStudentHTML(students[student]);
+                        var results = new RegExp('[\?&]' + name + '=([^$#]*)').exec(window.location.href);
+                        if (results == null)
+                            return null;
+                        else
+                            return results[1] || 0;
                     }
+
+                    function handleStudents(students){
+                        console.log(students);
+                        console.log('handling students');
+                        // For each student, format our student HTML and add it to the dom?
+                        // Or build up one long string and write to the dom once?
+                        var studentString = '';
+                        var featuredStudentsString = '';
+                        // the function can return 0 or null, and in that case we want to just load the first row from the results
+                        var row = (urlParam('row') != null && urlParam('row') != 0 ? urlParam('row') : 1);
+                        var count = 0;
+                        var foundStudent = false;
+                        var maxFeatIndex = 3;
+
+                        // set up the beginning of the featured section before we start populating it
+                        var mq = window.matchMedia( "(max-width: 768px)" );
+
+                        featuredStudentsString += '<div class="featured-student-section" data-open="true">';
+                        // + '<button onclick="toggleFeaturedStudents()">READ MORE SELFIES</button>'
+
+                        if (mq.matches)
+                        {
+                            featuredStudentsString += '<div class="slideshow">'
+                        }
+                        else
+                        {
+                            featuredStudentsString += '<div class="row">'
+                        }
+
+                        $(students).each(function(student){
+                            console.log(students[student]);
+                            console.log(students[student].row + " " + row);
+                            // We want to have a limited number of students in the bottom gallery of featured students
+                            if (count < maxFeatIndex) {
+                                // If our current student is a featured student we don't want to use that as a promoted student
+                                // As the user is already looking at that student, so we increase the number in the bottom by
+                                // one and skip this index
+                                if (students[student].row == row)
+                                    maxFeatIndex++;
+                                else
+                                    featuredStudentsString += formatFeaturedStudentHTML(students[student]);
+                                count++
+                            }
+                            // if this student is the one in the paramater then we will load it on our screen
+                            if (students[student].row == row)
+                            {
+                                foundStudent = true;
+                                studentString += formatStudentHTML(students[student]);
+                            }
+                        });
+
+                        if (!foundStudent)
+                        {
+                            studentString += formatStudentHTML(students[0]);
+                        }
+
+                        featuredStudentsString += '</div></div>';
+
+                        $('#student').html(studentString);
+                        $('#featured-students').html(featuredStudentsString);
+                    }
+
+                    function formatStudentHTML(student)
+                    {
+                        var result = '<div class="card-component main-student">' +
+                            '             <div class="card-component-image card-component-image-left">' +
+                            '                 <img class="student-image" src="' + student.image_url + '" alt="' + student.name + '">' +
+                            '             </div>' +
+                            '             <div class="card-text card-component-padded">' +
+                            '                 <h1 class="student-heading">' + student.name + ', \'' + student.year + '</h1>' +
+                            '                 <h2 class="student-major">' + student.major + '</h2>' +
+                            '                 <h2 class="student-hometown">' + student.hometown + '</h2>' +
+                            '             </div>' +
+                            '         </div>' +
+                            '         <div class="dots"></div>' +
+                            '         <p class="question">' + student.featured_question + '</p>' +
+                            '         <p class="answer">' + student.answer + '</p>';
+
+                        if (student.question_2)
+                        {
+                            result += '<p class="question">' + student.question_2 + '</p>' +
+                                '      <p class="answer">' + student.answer_2 + '</p>';
+                        }
+
+                        if (student.question_3)
+                        {
+                            result += '<p class="question">' + student.question_3 + '</p>' +
+                                '      <p class="answer">' + student.answer_3 + '</p>';
+                        }
+
+                        if (student.question_4)
+                        {
+                            result += '<p class="question">' + student.question_4 + '</p>' +
+                                '      <p class="answer">' + student.answer_4 + '</p>';
+                        }
+
+                        if (student.question_5)
+                        {
+                            result += '<p class="question">' + student.question_5 + '</p>' +
+                                '      <p class="answer">' + student.answer_5 + '</p>';
+                        }
+
+                        if (student.question_6)
+                        {
+                            result += '<p class="question">' + student.question_6 + '</p>' +
+                                '      <p class="answer">' + student.answer_6 + '</p>';
+                        }
+
+                        if (student.question_7)
+                        {
+                            result += '<p class="question">' + student.question_7 + '</p>' +
+                                '      <p class="answer">' + student.answer_7 + '</p>';
+                        }
+
+                        if (student.question_8)
+                        {
+                            result += '<p class="question">' + student.question_8 + '</p>' +
+                                '      <p class="answer">' + student.answer_8 + '</p>';
+                        }
+
+                        if (student.question_9)
+                        {
+                            result += '<p class="question">' + student.question_9 + '</p>' +
+                                '      <p class="answer">' + student.answer_9 + '</p>';
+                        }
+
+                        if (student.question_10)
+                        {
+                            result += '<p class="question">' + student.question_10 + '</p>' +
+                                '      <p class="answer">' + student.answer_10 + '</p>';
+                        }
+
+                        return result;
+                    }
+
+                    function formatFeaturedStudentHTML(student)
+                    {
+                        var result = '<div class="featured-student" data-student-id="' + student.row + '">' +
+                            '<div class="featured-student-image">' +
+                            '   <img src="' + student.image_url + '" alt="featured student">' +
+                            '</div>' +
+                            '<div class="featured-student-data">' +
+                            '   <p class="featured-student-info">' + student.name + ', \'' + student.year + '</p>' +
+                            '   <p class="featured-student-quip">' + student.short_quip + '</p>' +
+                            '</div>' +
+                            '</div>';
+                        return result;
+                    }
+                    $('[data-student-id]').click(function() {
+                        window.open('https://www.champlain.edu/student-stories/tell-us-about-yourself(ie)/meet-your-classmates?row=' + this.getAttribute('data-student-id'), '_self');
+                    });
                 });
-
-                if (!foundStudent)
-                {
-                    studentString += formatStudentHTML(students[0]);
-                }
-
-                $('#student').html(studentString);
-                $('#featured-students').html(featuredStudentsString);
-            }
-
-            function formatStudentHTML(student)
+            })(jQuery);
+        }
+        else
+        {
+            ccWaitTries--;
+            if (ccWaitTries > 10)
             {
-                var result = '<img class="student-image" src="' + student.image_url + '" alt="' + student.name + '">' +
-                    '         <h1 class="student-heading">' + student.name + ', \'' + student.year + '</h1>' +
-                    '         <h2 class="student-major">' + student.major + '</h2>' +
-                    '         <h2 class="student-hometown">' + student.hometown + '</h2>' +
-                    '         <div class="dots"></div>' +
-                    '         <p class="question">' + student.featured_question + '</p>' +
-                    '         <p class="answer">' + student.answer + '</p>';
-
-                if (student.question_2)
-                {
-                    result += '<p class="question">' + student.question_2 + '</p>' +
-                        '      <p class="answer">' + student.answer_2 + '</p>';
-                }
-
-                if (student.question_3)
-                {
-                    result += '<p class="question">' + student.question_3 + '</p>' +
-                        '      <p class="answer">' + student.answer_3 + '</p>';
-                }
-
-                if (student.question_4)
-                {
-                    result += '<p class="question">' + student.question_4 + '</p>' +
-                        '      <p class="answer">' + student.answer_4 + '</p>';
-                }
-
-                if (student.question_5)
-                {
-                    result += '<p class="question">' + student.question_5 + '</p>' +
-                        '      <p class="answer">' + student.answer_5 + '</p>';
-                }
-
-                if (student.question_6)
-                {
-                    result += '<p class="question">' + student.question_6 + '</p>' +
-                        '      <p class="answer">' + student.answer_6 + '</p>';
-                }
-
-                if (student.question_7)
-                {
-                    result += '<p class="question">' + student.question_7 + '</p>' +
-                        '      <p class="answer">' + student.answer_7 + '</p>';
-                }
-
-                if (student.question_8)
-                {
-                    result += '<p class="question">' + student.question_8 + '</p>' +
-                        '      <p class="answer">' + student.answer_8 + '</p>';
-                }
-
-                if (student.question_9)
-                {
-                    result += '<p class="question">' + student.question_9 + '</p>' +
-                        '      <p class="answer">' + student.answer_9 + '</p>';
-                }
-
-                if (student.question_10)
-                {
-                    result += '<p class="question">' + student.question_10 + '</p>' +
-                        '      <p class="answer">' + student.answer_10 + '</p>';
-                }
-
-                return result;
+                setTimeout(waitForJQuery, 50);
             }
-
-            function formatFeaturedStudentHTML(student)
-            {
-                return 'featured student ';
-            }
-        });
-    })(jQuery);
+        }
+    })();
     // ]]></script>
 </p>
 <div id="student">Loading Student....</div>
+<a href="x38771.xml" class="meetStudentsButton"><img alt="call to action button" src="images/ace/student-stories-dev/gallery-button-01.jpg" onmouseover="this.src='images/ace/student-stories-dev/gallery-button-02.jpg';" onmouseout="this.src='images/ace/student-stories-dev/gallery-button-01.jpg'" /></a>
 <p>If you’d like to be featured in an upcoming “Tell Us About Yourself(ie),” fill out <a href="https://docs.google.com/forms/d/e/1FAIpQLSe5m7kIS8_U0IpcaW8mbYxLBYd1MF14zylNiX3N1FBXHJkWvw/viewform?usp=sf_link#responses">this survey</a> and we’ll post the best answers!</p>
+<div class="dots"></div>
 <div id="featured-students">Loading Featured Students...</div>

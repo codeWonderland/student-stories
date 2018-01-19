@@ -3,6 +3,12 @@
     {
         margin: 0.75%;
         padding: 0!important;
+        transition: 0.2s ease-out;
+        border: 7px solid #00a9e0;
+    }
+
+    .card-component.gallery-student:hover {
+        cursor: pointer;
     }
 
     .student-data
@@ -26,7 +32,7 @@
 
         .student-data
         {
-            height: 250px;
+            height: 175px;
         }
     }
 </style>
@@ -140,7 +146,7 @@
                     function formatStudentHTML(spreadsheetEntry) {
                         console.log('formatting a student');
                         console.log(spreadsheetEntry);
-                        var result = '<div class="card-component card-component-round-corners card-component-shadow gallery-student" data-student-id="' + spreadsheetEntry.row + '">';
+                        var result = '<div class="card-component gallery-student" data-student-id="' + spreadsheetEntry.row + '">';
 
                         result += '     <div class="student-image">';
 
@@ -159,6 +165,10 @@
 
                         return result;
                     }
+
+                    $('[data-student-id]').click(function() {
+                        window.open('https://www.champlain.edu/student-stories/tell-us-about-yourself(ie)/meet-your-classmates?row=' + this.getAttribute('data-student-id'), '_self');
+                    });
                 });
             })(jQuery);
         }

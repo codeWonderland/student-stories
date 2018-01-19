@@ -50,8 +50,20 @@
         top: 31%;
     }
 
+    .card-component.student:hover
+    {
+        cursor: pointer;
+    }
+
     .card-component-image.card-component-image-right img {
         width: 100%;
+    }
+
+    @media only screen and (min-width: 768px) {
+        .card-component-padded.card-text.student-data
+        {
+            width: 70%;
+        }
     }
 
     @media only screen and (max-width: 768px)
@@ -67,6 +79,9 @@
 <p>We created Tell Us About Yourself(ie) as a goofy, off -the-wall way to say, &ldquo;Hey,&rdquo; and introduce yourself to your soon-to-be classmates. All you need to do is answer at least 10 of our quirky fact questions&mdash;make sure you tell us at least one thng no one but you would know&mdash;on the form at <a href="https://champlain.edu/yourselfie">champlain.edu/yourselfie</a>. Then, upload a glamour shot, um, selfie, and you&rsquo;re done. If we like your answers, we&rsquo;ll highlight your profile and share your answers with your future Class (PS, there is almost no way we won&rsquo;t love them&mdash;you&rsquo;re family now!).</p>
 <h2>Featured Profiles</h2>
 <p>Tell Us About Yourself(ie) is an annual Champlain tradition, ad we always have super strong participation. While we wait for the enrollment commitments to roll in and bold souls to start submitting their selfies, check out these samples below from the Class of 2021 (+ Chauncey T. Beaver, our mascot). We&rsquo;ll be posting the new batch as soon as they start rolling in, so keep coming back, and <a href="https://champlain.edu/yourselfie">Tell Us About YOURSelf(ie)</a> today!</p>
+<a class="block-rotating-link" href="https://champlain.edu/yourselfie" target="_blank">
+    <span data-hover="Tell Us About Yourself(ie)!">Tell Us About Yourself(ie)!</span>
+</a>
 <div id="students">Loading Selfies....</div>
 <script>
 var ccWaitTries = 10;
@@ -199,6 +214,10 @@ var ccWaitTries = 10;
 
                     return result;
                 }
+
+                $('[data-student-id]').click(function() {
+                    window.open('https://www.champlain.edu/student-stories/tell-us-about-yourself(ie)/meet-your-classmates?row=' + this.getAttribute('data-student-id'), '_self');
+                });
             });
         })(jQuery);
     }
