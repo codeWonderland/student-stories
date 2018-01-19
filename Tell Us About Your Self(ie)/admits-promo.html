@@ -1,6 +1,7 @@
 <style>
     .student {
         background-color: #00a9e0;
+        position: relative;
     }
 
     p.student-question {
@@ -24,7 +25,8 @@
 
     h2.student-answer {
         margin-bottom: 0;
-        color: black;
+        color: #57585a;
+        font-size: 22px;
     }
 
     p.student-info {
@@ -60,9 +62,18 @@
     }
 
     @media only screen and (min-width: 768px) {
+
         .card-component-padded.card-text.student-data
         {
             width: 70%;
+        }
+
+        .card-component.student::after {
+            content: '(Click for More)';
+            position: absolute;
+            bottom: 10px;
+            left: 28%;
+            color: white;
         }
     }
 
@@ -72,6 +83,14 @@
         {
             margin: 1rem 0;
         }
+
+        .card-component.student::after {
+            position: absolute;
+            bottom: 10px;
+            left: 33%;
+            color: white;
+            content: '(Tap for More)';
+        }
     }
 </style>
 <p><img alt="Tell Us About Your Self(ie) banner image" src="Images/TUAYS/TUAYS_Admits_Hero_Cyan.gif" style="width: 100%; height: auto;" /></p>
@@ -80,7 +99,7 @@
 <h2>Featured Profiles</h2>
 <p>Tell Us About Yourself(ie) is an annual Champlain tradition, ad we always have super strong participation. While we wait for the enrollment commitments to roll in and bold souls to start submitting their selfies, check out these samples below from the Class of 2021 (+ Chauncey T. Beaver, our mascot). We&rsquo;ll be posting the new batch as soon as they start rolling in, so keep coming back, and <a href="https://champlain.edu/yourselfie">Tell Us About YOURSelf(ie)</a> today!</p>
 <a class="block-rotating-link" href="https://champlain.edu/yourselfie" target="_blank">
-    <span data-hover="Tell Us About Yourself(ie)!">Tell Us About Yourself(ie)!</span>
+    <span style="background-color: rgb(73,56,73);" data-hover="Tell Us About Yourself(ie)!">Tell Us About Yourself(ie)!</span>
 </a>
 <div id="students">Loading Selfies....</div>
 <script>
