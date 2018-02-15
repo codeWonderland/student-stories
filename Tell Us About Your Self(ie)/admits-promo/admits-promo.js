@@ -1,108 +1,3 @@
-<style>
-    .student {
-        background-color: #00a9e0;
-        position: relative;
-    }
-
-    p.student-question {
-        color: white;
-        font-weight: bold;
-        letter-spacing: 0.5px;
-    }
-
-    .card-component-padded.card-text.student-data {
-        padding: 2rem;
-    }
-
-    .student-answer-container {
-        margin: 1rem 0;
-        background-color: white;
-        padding: 1rem;
-        text-align: center;
-        color: black;
-        position: relative;
-    }
-
-    h2.student-answer {
-        margin-bottom: 0;
-        color: #57585a;
-        font-size: 22px;
-    }
-
-    p.student-info {
-        margin-top: 7px;
-        font-size: 14px;
-        color: #5a5a5a;
-    }
-
-    p.student-sub-answer {
-        font-size: 14px;
-        color: #5a5a5a;
-    }
-
-    .student-answer-container:after {
-        display: block;
-        width: 0;
-        content: ' ';
-        position: absolute;
-        border-bottom: 20px solid transparent;
-        border-left: 20px solid white;
-        border-top: 20px solid transparent;
-        right: -20px;
-        top: 31%;
-    }
-
-    .card-component.student:hover
-    {
-        cursor: pointer;
-    }
-
-    .card-component-image.card-component-image-right img {
-        width: 100%;
-    }
-
-    @media only screen and (min-width: 768px) {
-
-        .card-component-padded.card-text.student-data
-        {
-            width: 70%;
-        }
-
-        .card-component.student::after {
-            content: '(Click for More)';
-            position: absolute;
-            bottom: 10px;
-            left: 28%;
-            color: white;
-        }
-    }
-
-    @media only screen and (max-width: 768px)
-    {
-        .student
-        {
-            margin: 1rem 0;
-        }
-
-        .card-component.student::after {
-            position: absolute;
-            bottom: 10px;
-            left: 33%;
-            color: white;
-            content: '(Tap for More)';
-        }
-    }
-</style>
-<p><img alt="Tell Us About Your Self(ie) banner image" src="Images/TUAYS/TUAYS_Admits_Hero_Cyan.gif" style="width: 100%; height: auto;" /></p>
-<h1>Get Ready to Be Champlain Famous!</h1>
-<p>We created Tell Us About Yourself(ie) as a goofy, off -the-wall way to say, &ldquo;Hey,&rdquo; and introduce yourself to your soon-to-be classmates. All you need to do is answer at least 10 of our quirky fact questions&mdash;make sure you tell us at least one thng no one but you would know&mdash;on the form at <a href="https://champlain.edu/yourselfie">champlain.edu/yourselfie</a>. Then, upload a glamour shot, um, selfie, and you&rsquo;re done. If we like your answers, we&rsquo;ll highlight your profile and share your answers with your future Class (PS, there is almost no way we won&rsquo;t love them&mdash;you&rsquo;re family now!).</p>
-<h2>Featured Profiles</h2>
-<p>Tell Us About Yourself(ie) is an annual Champlain tradition, ad we always have super strong participation. While we wait for the enrollment commitments to roll in and bold souls to start submitting their selfies, check out these samples below from the Class of 2021 (+ Chauncey T. Beaver, our mascot). We&rsquo;ll be posting the new batch as soon as they start rolling in, so keep coming back, and <a href="https://champlain.edu/yourselfie">Tell Us About YOURSelf(ie)</a> today!</p>
-<a class="block-rotating-link" href="https://champlain.edu/yourselfie" target="_blank">
-    <span style="background-color: rgb(73,56,73);" data-hover="Tell Us About Yourself(ie)!">Tell Us About Yourself(ie)!</span>
-</a>
-<div id="students">Loading Selfies....</div>
-<script>
 var ccWaitTries = 10;
 (function waitForJQuery() {
     if (window.$)
@@ -110,12 +5,12 @@ var ccWaitTries = 10;
         (function($){
             console.log('in the anon function');
             $(document).ready(function(){
-                console.log('in the dom ready');
+//                console.log('in the dom ready');
                 var students = null;
 
                 // See if we have students
                 if (Modernizr.localstorage && localStorage.getItem('ccTuays') !== null) {
-                    console.log('have students lcoally');
+//                    console.log('have students lcoally');
                     students = $.parseJSON(localStorage.getItem('ccTuays'));
                     // Make sure data is not expired
                     var twoHours = 1000 * 60 * 60 * 2, // 2 hours in milliseconds
@@ -130,7 +25,7 @@ var ccWaitTries = 10;
                 }
 
                 if(!students) {
-                    console.log('fetching students');
+//                    console.log('fetching students');
                     // Go get our students
                     var $xhrStudents = $.ajax({
                         url: "https://forms.champlain.edu/googlespreadsheet/find/type/tradtuays",
@@ -147,8 +42,8 @@ var ccWaitTries = 10;
 
 
                         if(data){
-                            console.log('data from sheet:');
-                            console.log(data);
+//                            console.log('data from sheet:');
+//                            console.log(data);
                             try {
                                 // Sort by row
                                 for(var student in data.message) {
@@ -185,24 +80,27 @@ var ccWaitTries = 10;
                 }
 
                 function handleStudents(students){
-                    console.log(students);
-                    console.log('handling students');
+//                    console.log(students);
+//                    console.log('handling students');
                     // For each student, format our student HTML and add it to the dom?
                     // Or build up one long string and write to the dom once?
                     var studentsString = '';
                     var count = 0;
                     $(students).each(function(student){
-                        console.log(students[student]);
+//                        console.log(students[student]);
                         if (count < 4)
                             studentsString += formatStudentHTML(students[student]);
                         count++
                     });
                     $('#students').html(studentsString);
+                    $('[data-student-id]').click(function() {
+                        window.open('https://www.champlain.edu/student-stories/tell-us-about-yourself(ie)/meet-your-classmates?row=' + this.getAttribute('data-student-id'), '_blank');
+                    });
                 }
 
                 function formatStudentHTML(spreadsheetEntry) {
-                    console.log('formatting a student');
-                    console.log(spreadsheetEntry);
+//                    console.log('formatting a student');
+//                    console.log(spreadsheetEntry);
                     var result = '<div class="card-component student" data-student-id="' + spreadsheetEntry.row + '">' +
                         '           <div class="card-component-padded card-text student-data">' +
                         '                <p class="student-question">' + spreadsheetEntry.featured_question + '</p>' +
@@ -233,10 +131,6 @@ var ccWaitTries = 10;
 
                     return result;
                 }
-
-                $('[data-student-id]').click(function() {
-                    window.open('https://www.champlain.edu/student-stories/tell-us-about-yourself(ie)/meet-your-classmates?row=' + this.getAttribute('data-student-id'), '_self');
-                });
             });
         })(jQuery);
     }
@@ -249,4 +143,3 @@ var ccWaitTries = 10;
         }
     }
 })();
-</script>
