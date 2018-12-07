@@ -1,4 +1,5 @@
 mq = window.matchMedia( "(max-width: 768px)" )
+
 $(document).ready ->
   container = document.getElementsByClassName('student-container')[0]
   dataSource = document.getElementsByClassName('student-profile')[0]
